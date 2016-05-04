@@ -1,0 +1,20 @@
+.m-t-md {
+    margin-top: 20px;
+}
+
+header {
+    margin: 20px 0;
+}
+
+.content {
+    margin: 30px 0 50px;
+}
+
+.vertical-middle {
+    vertical-align: middle !important;
+}
+
+/*.wraper-table {
+    padding: 10px;
+}*/
+
