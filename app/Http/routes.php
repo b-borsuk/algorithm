@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'AlgoController@getHome');
 
 Route::get('/biosystems', ['as' => 'biosystems', 'uses' => 'AlgoController@getBiosystems']);
 Route::post('/biosystems', 'AlgoController@getBiosystems');

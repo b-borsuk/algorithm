@@ -11,6 +11,15 @@ use App\Datas\DynamicData;
 
 class AlgoController extends Controller
 {
+
+    /**
+     *
+     */
+    public function getHome(Request $request)
+    {
+        return view('default');
+    }
+
     /**
      *
      */

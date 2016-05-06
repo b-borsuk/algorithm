@@ -32,7 +32,7 @@ abstract class Data
 
         $file = $this->getFile();
 
-        if (is_null($file)) {
+        if (!($file instanceof \SplFileObject)) {
             $this->addError(new Exception("File is not added"), 'not_file');
             return;
         }
