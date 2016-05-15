@@ -91,14 +91,14 @@ class SugarData extends Data
         $max = null;
 
         foreach ($data as $sugar) {
-            $max = $max < max($sugar['data']) ? max($sugar['data']) : $max ;
+            $max = $max < $sugar['mat'] ? $sugar['mat'] : $max;
         }
 
         if (is_null($max)) {
             return $this->addError(new Exeption("Max is null"), 'max');
         }
 
-        $this->max = $max + 1;
+        $this->max = $max + 5;
     }
 
     public function sumPow($L)
@@ -116,9 +116,9 @@ class SugarData extends Data
 
     public function funY($doza, $L)
     {
-        $y_max =$this->max;
+        $y_max = $this->max;
 
-        return $y_max * (1 - exp(- $L * $doza));
+        return $y_max * (1 - exp(-$L * $doza));
     }
 
     public function setMinL()
@@ -156,5 +156,77 @@ class SugarData extends Data
         $this->minL2 = $avgL;
 
         $this->minL2Pow = self::sumPow($avgL);
+    }
+
+    public function getJsonPoints()
+    {
+        $result = [];
+
+        $max = $this->max;
+
+        foreach ($this->data as $doses => $value) {
+            $result[] = [$doses, $value['mat'], $max];
+        }
+
+        return json_encode($result);
+    }
+
+    public function getJsonResult()
+    {
+        $data = $this->data;
+        $doses = array_keys($data);
+
+        $min_doses = min($doses);
+        $max_doses = max($doses);
+
+        $range = 1;
+
+        $result = [];
+        $doses_row = ['dose'];
+
+        $y_max = $this->max;
+        $minL  = $this->minL;
+        $minL2 = $this->minL2;
+
+        foreach ($data as $dose => $value) {
+            $doses_row[] = 'Dose ' . $dose . ': ' . $y_max . '*(1-e^(-' . $value['L'] . 'x))';
+        }
+
+        $minLPow  = $this->minLPow;
+        $minL2Pow = $this->minL2Pow;
+        $doses_row[] = 'L1 Pow ' . $minLPow . ': ' . $y_max . '*(1-e^(-' . $minL . 'x))';
+        $doses_row[] = 'L2 Pow ' . $minL2Pow . ': ' . $y_max . '*(1-e^(-' . $minL2 . 'x))';
+
+        $doses_row[] = 'MAX';
+
+
+
+        $result[] = $doses_row;
+        for ($dose = $min_doses; $dose <= $max_doses; $dose += $range) {
+            $row = [$dose];
+            foreach ($data as $dose_val => $value) {
+                $row[] = $this->funY($dose, $value['L']);
+            }
+
+            $row[] = $this->funY($dose, $minL);
+            $row[] = $this->funY($dose, $minL2);
+            $row[] = $this->funY($dose, $y_max);
+
+            $result[] = $row;
+        }
+
+        return json_encode($result);
+    }
+
+    public function getMaxH()
+    {
+        return max($this->doses) + min($this->doses);
+    }
+
+    public function getOptimalLineNumber()
+    {
+        $doses_line_count = count($this->data);
+
+        return $this->minLPow < $this->minL2Pow ? $doses_line_count + 1 : $doses_line_count + 2;
     }
 }

@@ -17,6 +17,11 @@
     <body>
         @include('header')
 
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.js"></script>
+        <script src="/js/d3.min.js" charset="utf-8"></script>
+        <script src="/js/c3.js"></script>
+
         <div class="container">
             @if (count($errors) > 0)
                 @foreach ($errors->all() as $error)
@@ -40,10 +45,5 @@
 
         </div>
 
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/bootstrap.js"></script>
-        <script src="/js/d3.min.js" charset="utf-8"></script>
-        <script src="/js/c3.js"></script>
-        <script src="/js/app.js"></script>
     </body>
 </html>

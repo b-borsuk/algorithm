@@ -28,21 +28,13 @@
                 </form>
             </div>
         </div>
-
-        <!-- <aside class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <form action="{{ action('AlgoController@postSugar') }}" method="POST" role="form">
-                <legend>Get info by</legend>
-
-                <div class="form-group">
-                    <label for="">label</label>
-                    <input type="text" class="form-control" id="" placeholder="Input field">
-                </div>
-
-
-
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </aside> -->
+    </div>
+    <div class="row">
+        <div class="result col-xs-12">
+            @if (!empty($data))
+                @include ('sugar-result')
+            @endif
+        </div>
     </div>
 
 @endsection

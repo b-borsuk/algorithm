@@ -37,8 +37,9 @@ class AlgoController extends Controller
 
         $data = new SugarData($sugar_file);
 
-        dd($data);
-        return 'ssfsdsd';
+        return view('sugar', [
+            'data' => $data,
+        ]);
     }
 
     /**

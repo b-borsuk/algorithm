@@ -154,13 +154,10 @@ class DynamicData extends Data
 
         $materials_price_data = $this->materials_price_data;
         $rent_data = $this->rent_data;
-
         $result = [];
 
         for ($i = $days_count; $i > 0; $i--) {
-
             $rez[$i] = [];
-
             $x_min = 0;
             $x_max = 0;
 
@@ -172,7 +169,6 @@ class DynamicData extends Data
             }
 
             for ($j = $x_min; $j <= $x_max; $j += $step) {
-
                 $y_min = max($need_materials - $j, 0);
                 $y_max = min(
                     ($days_count - $i + 1) * $need_materials - $j,
@@ -180,7 +176,6 @@ class DynamicData extends Data
                 );
 
                 for ($k = $y_min; $k <= $y_max; $k += $step) {
-
                     $price_for_material = isset($materials_price_data[$k]) ? $materials_price_data[$k] : 0;
                     $price_for_rent = isset($rent_data[$j]) ? $rent_data[$j] : 0;
 
@@ -191,20 +186,15 @@ class DynamicData extends Data
                     }
 
                     $result[$i]['data'][$j]['data'][$k] = $f_temp;
-
                     if(empty($result[$i]['data'][$j]['min']) || $result[$i]['data'][$j]['min'] > $f_temp) {
                         $result[$i]['data'][$j]['min'] = $f_temp;
                         $result[$i]['data'][$j]['optimal_purchase'] = $k;
                     }
-
                 }
-
             }
-
         }
 
         ksort($result);
-
         return $result;
     }
 
