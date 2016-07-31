@@ -25,11 +25,11 @@ class Controller extends BaseController
 
 
         $projects = [
-            // 'biosystems' => [
-            //     'name' => 'Biosystems',
-            //     'url' => action('AlgoController@getBiosystems'),
-            //     'active' => $current_route_name == 'biosystems',
-            // ],
+            'biosystems' => [
+                'name' => 'Biosystems',
+                'url' => action('AlgoController@getBiosystems'),
+                'active' => $current_route_name == 'biosystems',
+            ],
             'sugar' => [
                 'name' => 'Sugar',
                 'url' => action('AlgoController@getSugar'),

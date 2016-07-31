@@ -42,6 +42,11 @@ class DynamicData extends Data
 
     public $rent_data = [];
 
+    public $optimal = [];
+
+    public $optimal_data = [];
+
+    public $show_optimals = [];
 
     function __construct(array $data, $file = null)
     {
@@ -238,4 +243,68 @@ class DynamicData extends Data
         $this->setResult($result);
     }
 
+    public function calcAllResult()
+    {
+        $this->optimal_data = $this->getOptimus();
+
+        $this->optimal = array_sort_recursive($this->generateShowResult($this->optimal_data));
+
+        foreach ($this->optimal as $key => $value) {
+            $this->show_optimals[$key] = 'F' . ($key + 1) . ' = ('.implode(', ', $value) . ')';
+        }
+    }
+
+    public function generateShowResult($optimal, $day = 1)
+    {
+        $result = [];
+        foreach ($optimal as $value) {
+            $next_day_optim = [];
+
+            if ($day < $this->days_count) {
+                $next_day_optim = $this->generateShowResult($value['next'], $day + 1);
+            } else {
+                $result[] = [$day=>$value['optim']];
+            }
+
+            foreach ($next_day_optim as $next_value) {
+                $next_value[$day] = $value['optim'];
+                $result[] = $next_value;
+            }
+        }
+
+        return $result;
+    }
+
+    public function getOptimus($day = 1, $remainder = 0)
+    {
+        $optimal = [];
+
+        $optimal_for_day = $this->optimalForDay($day, $remainder);
+
+        foreach ($optimal_for_day as $key => $value) {
+            if ($day < $this->days_count) {
+                $optimal[$key]['next'] = $this->getOptimus($day + 1, $remainder + $value - $this->need_materials);
+            }
+            $optimal[$key]['optim'] = $value;
+        }
+
+        return $optimal;
+    }
+
+    public function optimalForDay($day = 1, $remainder = 0)
+    {
+        $day_data = $this->result[$day]['data'][$remainder];
+
+        $min = $day_data['min'];
+
+        $result = [];
+
+        foreach ($day_data['data'] as $key => $value) {
+            if ($value == $min) {
+                $result[] = $key;
+            }
+        }
+
+        return $result;
+    }
 }

@@ -14,7 +14,7 @@
 Route::get('/', 'AlgoController@getHome');
 
 Route::get('/biosystems', ['as' => 'biosystems', 'uses' => 'AlgoController@getBiosystems']);
-Route::post('/biosystems', 'AlgoController@getBiosystems');
+Route::post('/biosystems', 'AlgoController@postBiosystems');
 
 Route::get('/sugar', ['as' => 'sugar', 'uses' => 'AlgoController@getSugar']);
 Route::post('/sugar', 'AlgoController@postSugar');

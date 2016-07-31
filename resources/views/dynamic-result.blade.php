@@ -14,7 +14,6 @@
 @else
 
     <div class="content">
-
         <div class="panel panel-default">
 
             <div class="panel-body">
@@ -57,7 +56,7 @@
 
         <ul class="nav nav-tabs" role="tablist">
             @foreach ($data->getResult() as $day => $day_value)
-                <li role="presentation" @if ($day == 1) class="active" @endif><a href="#day_{{ $day }}" aria-controls="day_{{ $day }}" role="tab" data-toggle="tab">Дунь {{ $day }}</a></li>
+                <li role="presentation" @if ($day == 1) class="active" @endif><a href="#day_{{ $day }}" aria-controls="day_{{ $day }}" role="tab" data-toggle="tab">День {{ $day }}</a></li>
             @endforeach
         </ul>
 
@@ -121,6 +120,14 @@
             @endforeach
 
         </div>
+
+         <div class="panel panel-default">
+
+            <div class="panel-body">
+                @foreach ($data->show_optimals as $result)
+                    <p> {!! $result !!} </p>
+                @endforeach
+            </div>
 
     </div>
 
